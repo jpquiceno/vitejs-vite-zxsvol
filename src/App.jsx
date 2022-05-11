@@ -10,31 +10,43 @@ const people = [
   { id: 5, name: 'Katelyn Rohan' },
 ];
 
-const locationAlpha = [
-  { id: 1, city: 'London' },
-  { id: 2, city: 'Glasgow' },
-  { id: 3, city: 'Edinbourough' },
-  { id: 4, city: 'Liverpool' },
-  { id: 5, city: 'Manchester' },
+const location = [
+  { id: 1, name: 'London' },
+  { id: 2, name: 'Glasgow' },
+  { id: 3, name: 'Edinbourough' },
+  { id: 4, name: 'Liverpool' },
+  { id: 5, name: 'Manchester' },
 ];
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState();
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
+  const [selectedCity, setSelectedCity] = useState(location[0]);
+  const [locations, setLocations] = useState(location);
 
+  function handlePersonSelect(person) {
+    if (person) {
+      setSelectedPerson(person);
+      setSelectedCity(location[person.id - 1]);
+      setLocations(Array.of(location[person.id - 1]));
+    }
+    return;
+  }
   return (
     <div className="App">
       <h1>Prism Styled Dropdown w/ Headless UI</h1>
+      <h2>Demonstrating a codependent select element.</h2>
+      
       <p style={{ fontSize: 16, lineHeight: 1.4 }}>
         Below is an example of HeadlessUI's Listbox component using Prism CSS
       </p>
       <hr />
-      <Listbox value={selectedPerson} onChange={setSelectedPerson}>
+      <Listbox value={selectedPerson} onChange={handlePersonSelect}>
         {({ open }) => (
           <>
             <div className="prism-select prism-select-md">
               <Listbox.Label className="prism-check__label">
-                Assignee:
+                {selectedPerson.name}
               </Listbox.Label>
               <Listbox.Button className="prism-select__toggle form-control">
                 {selectedPerson.name}
@@ -74,6 +86,65 @@ function App() {
                               } ${selected ? 'active' : ''} `}
                             >
                               {person.name}
+                            </span>
+                          </button>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                  </div>
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </>
+        )}
+      </Listbox>
+      <br />
+      <br />
+      <Listbox value={selectedCity} onChange={setSelectedCity}>
+        {({ open }) => (
+          <>
+            <div className="prism-select prism-select-md">
+              <Listbox.Label className="prism-check__label">
+                {selectedCity.name}
+              </Listbox.Label>
+              <Listbox.Button className="prism-select__toggle form-control">
+                {selectedCity.name}
+              </Listbox.Button>
+              <Transition
+                show={open}
+                enter="transition duration-100 ease-out"
+                enterFrom="transform scale-95 opacity-0"
+                enterTo="transform scale-100 opacity-100"
+                leave="transition duration-75 ease-out"
+                leaveFrom="transform scale-100 opacity-100"
+                leaveTo="transform scale-95 opacity-0"
+              >
+                <Listbox.Options static as="div">
+                  <div className="prism-select__menu-open">
+                    {locations.map((city) => (
+                      <Listbox.Option
+                        key={city.id}
+                        value={city}
+                        as="Fragment"
+                        disabled={city.unavailable}
+                      >
+                        {({ active, selected, disabled }) => (
+                          <button
+                            disabled={city.unavailable}
+                            className={`prism-select__option ${
+                              active ? 'active' : ''
+                            } ${
+                              selected ? 'prism-select__option-selected' : ''
+                            } ${
+                              disabled ? 'prism-select__option-disabled' : ''
+                            } `}
+                          >
+                            <span
+                              className={`prism-select__label ${
+                                active ? 'active' : ''
+                              } ${selected ? 'active' : ''} `}
+                            >
+                              {city.name}
                             </span>
                           </button>
                         )}
