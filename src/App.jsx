@@ -36,7 +36,7 @@ function App() {
     <div className="App">
       <h1>Prism Styled Dropdown w/ Headless UI</h1>
       <h2>Demonstrating a codependent select element.</h2>
-      
+
       <p style={{ fontSize: 16, lineHeight: 1.4 }}>
         Below is an example of HeadlessUI's Listbox component using Prism CSS
       </p>
@@ -45,9 +45,7 @@ function App() {
         {({ open }) => (
           <>
             <div className="prism-select prism-select-md">
-              <Listbox.Label className="prism-check__label">
-                {selectedPerson.name}
-              </Listbox.Label>
+              <Listbox.Label className="">{selectedPerson.name}</Listbox.Label>
               <Listbox.Button className="prism-select__toggle form-control">
                 {selectedPerson.name}
               </Listbox.Button>
@@ -104,9 +102,7 @@ function App() {
         {({ open }) => (
           <>
             <div className="prism-select prism-select-md">
-              <Listbox.Label className="prism-check__label">
-                {selectedCity.name}
-              </Listbox.Label>
+              <Listbox.Label className="">{selectedCity.name}</Listbox.Label>
               <Listbox.Button className="prism-select__toggle form-control">
                 {selectedCity.name}
               </Listbox.Button>
